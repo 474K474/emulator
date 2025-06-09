@@ -80,7 +80,12 @@ def set_remote_terminal_color():
 @app.route('/set_robot_gripper_data')
 def set_robot_gripper_data():
     db_manager = get_db()
-    # Synchronize traffic lights based on gripper G value
+
+    # Проверка: если параметр save_data не true — не сохраняем
+    save_data_flag = request.args.get('save_data', 'true').lower() == 'true'
+    if not save_data_flag:
+        return {"status": "skipped", "reason": "save_data disabled"}
+
     gripper_g = int(request.args.get('G', 0))
     if gripper_g > 0:
         trafficLights.L1 = 1
@@ -88,13 +93,13 @@ def set_robot_gripper_data():
         trafficLights.L1 = 0
     trafficLights.set_properties(request)
 
-    # Prepare data for insertion into measurements table
     measurement_data = request.args.to_dict()
     measurement_data['timestamp'] = datetime.now().isoformat()
     measurement_data['device_name'] = 'robotGripper'
     db_manager.insert_measurement(measurement_data)
 
     return robotGripper.set_properties(request)
+
 
 
 @app.route('/save_poi')
