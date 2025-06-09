@@ -1,105 +1,113 @@
+setInterval(randomize, 1000);
+setInterval(connection, 3000);
 
-setInterval(randomize, 1000)
-setInterval(connection, 3000)
+let b1 = 0;
+let b2 = 0;
+let b3 = 0;
 
-
-let b1 = 0
-let b2 = 0
-let b3 = 0
-
-function b1_click(){
-    b1+=1
-}
-function b2_click(){
-    b2+=1
-}
-function b3_click(){
-    b3+=1
-}
-
-
+function b1_click() { b1 += 1; }
+function b2_click() { b2 += 1; }
+function b3_click() { b3 += 1; }
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
-function connection(){
-    if (document.getElementById("robot_gripper_connect").checked){
-        connect_robot_1()
-    }
-    if (document.getElementById("robot_vacuum_connect").checked){
-        connect_robot_2()
-    }
-    if (document.getElementById("remote_terminal_connect").checked){
-        connect_remote_terminal()
-    }
-    if (document.getElementById("traffic_lights_connect").checked){
-        connect_traffic_lights()
-    }
-    if (document.getElementById("smart_camera_connect").checked){
-        connect_smart_camera()
-    }
-
-
+function convertTemperature(raw) {
+    return (raw / 100) * 150;
 }
 
+function convertLoad(raw) {
+    return (raw / 4096) * 10;
+}
 
+function convertAngle(raw) {
+    return (raw / 2048) * 180;
+}
 
+function randomize() {
+    if (document.getElementById("randomize").checked) {
+        document.getElementById("t1_1").value = getRandomInt(0, 100);
+        document.getElementById("t2_1").value = getRandomInt(0, 100);
+        document.getElementById("t3_1").value = getRandomInt(0, 100);
+        document.getElementById("t4_1").value = getRandomInt(0, 100);
+        document.getElementById("t5_1").value = getRandomInt(0, 100);
+        document.getElementById("t6_1").value = getRandomInt(0, 100);
+        document.getElementById("l1_1").value = getRandomInt(0, 2048);
+        document.getElementById("l2_1").value = getRandomInt(0, 2048);
+        document.getElementById("l3_1").value = getRandomInt(0, 2048);
+        document.getElementById("l4_1").value = getRandomInt(0, 2048);
+        document.getElementById("l5_1").value = getRandomInt(0, 2048);
+        document.getElementById("l6_1").value = getRandomInt(0, 2048);
+        document.getElementById("m1_1").value = getRandomInt(0, 2048);
+        document.getElementById("m2_1").value = getRandomInt(0, 2048);
+        document.getElementById("m3_1").value = getRandomInt(0, 2048);
+        document.getElementById("m4_1").value = getRandomInt(0, 2048);
+        document.getElementById("m5_1").value = getRandomInt(0, 2048);
+        document.getElementById("m6_1").value = getRandomInt(0, 2048);
+        document.getElementById("s_1").value = getRandomInt(0, 100);
+        document.getElementById("c_1").value = getRandomInt(0, 100);
+        document.getElementById("n_1").value = getRandomInt(0, 100);
 
-function randomize(){
-    if (document.getElementById("randomize").checked){
-        document.getElementById("t1_1").value = getRandomInt(0, 100)
-        document.getElementById("t2_1").value = getRandomInt(0, 100)
-        document.getElementById("t3_1").value = getRandomInt(0, 100)
-        document.getElementById("t4_1").value = getRandomInt(0, 100)
-        document.getElementById("t5_1").value = getRandomInt(0, 100)
-        document.getElementById("t6_1").value = getRandomInt(0, 100)
-        document.getElementById("l1_1").value = getRandomInt(0, 2048)
-        document.getElementById("l2_1").value = getRandomInt(0, 2048)
-        document.getElementById("l3_1").value = getRandomInt(0, 2048)
-        document.getElementById("l4_1").value = getRandomInt(0, 2048)
-        document.getElementById("l5_1").value = getRandomInt(0, 2048)
-        document.getElementById("l6_1").value = getRandomInt(0, 2048)
-        document.getElementById("m1_1").value = getRandomInt(0, 2048)
-        document.getElementById("m2_1").value = getRandomInt(0, 2048)
-        document.getElementById("m3_1").value = getRandomInt(0, 2048)
-        document.getElementById("m4_1").value = getRandomInt(0, 2048)
-        document.getElementById("m5_1").value = getRandomInt(0, 2048)
-        document.getElementById("m6_1").value = getRandomInt(0, 2048)
-        document.getElementById("s_1").value = getRandomInt(0, 100)
-        document.getElementById("c_1").value = getRandomInt(0, 100)
-        document.getElementById("n_1").value = getRandomInt(0, 100)
+        document.getElementById("t1_2").value = getRandomInt(0, 100);
+        document.getElementById("t2_2").value = getRandomInt(0, 100);
+        document.getElementById("t3_2").value = getRandomInt(0, 100);
+        document.getElementById("t4_2").value = getRandomInt(0, 100);
+        document.getElementById("t5_2").value = getRandomInt(0, 100);
+        document.getElementById("t6_2").value = getRandomInt(0, 100);
+        document.getElementById("l1_2").value = getRandomInt(0, 4096);
+        document.getElementById("l2_2").value = getRandomInt(0, 4096);
+        document.getElementById("l3_2").value = getRandomInt(0, 4096);
+        document.getElementById("l4_2").value = getRandomInt(0, 4096);
+        document.getElementById("l5_2").value = getRandomInt(0, 4096);
+        document.getElementById("l6_2").value = getRandomInt(0, 4096);
+        document.getElementById("m1_2").value = getRandomInt(0, 2048);
+        document.getElementById("m2_2").value = getRandomInt(0, 2048);
+        document.getElementById("m3_2").value = getRandomInt(0, 2048);
+        document.getElementById("m4_2").value = getRandomInt(0, 2048);
+        document.getElementById("m5_2").value = getRandomInt(0, 2048);
+        document.getElementById("m6_2").value = getRandomInt(0, 2048);
+        document.getElementById("s_2").value = getRandomInt(0, 100);
+        document.getElementById("c_2").value = getRandomInt(0, 100);
+        document.getElementById("n_2").value = getRandomInt(0, 100);
 
-        document.getElementById("t1_2").value = getRandomInt(0, 100)
-        document.getElementById("t2_2").value = getRandomInt(0, 100)
-        document.getElementById("t3_2").value = getRandomInt(0, 100)
-        document.getElementById("t4_2").value = getRandomInt(0, 100)
-        document.getElementById("t5_2").value = getRandomInt(0, 100)
-        document.getElementById("t6_2").value = getRandomInt(0, 100)
-        document.getElementById("l1_2").value = getRandomInt(0, 4096)
-        document.getElementById("l2_2").value = getRandomInt(0, 4096)
-        document.getElementById("l3_2").value = getRandomInt(0, 4096)
-        document.getElementById("l4_2").value = getRandomInt(0, 4096)
-        document.getElementById("l5_2").value = getRandomInt(0, 4096)
-        document.getElementById("l6_2").value = getRandomInt(0, 4096)
-        document.getElementById("m1_2").value = getRandomInt(0, 2048)
-        document.getElementById("m2_2").value = getRandomInt(0, 2048)
-        document.getElementById("m3_2").value = getRandomInt(0, 2048)
-        document.getElementById("m4_2").value = getRandomInt(0, 2048)
-        document.getElementById("m5_2").value = getRandomInt(0, 2048)
-        document.getElementById("m6_2").value = getRandomInt(0, 2048)
-        document.getElementById("s_2").value = getRandomInt(0, 100)
-        document.getElementById("c_2").value = getRandomInt(0, 100)
-        document.getElementById("n_2").value = getRandomInt(0, 100)
+        document.getElementById("code").value = getRandomInt(100, 999);
 
-        document.getElementById("code").value = getRandomInt(100, 999)
+        showConvertedData();
     }
 }
 
+function showConvertedData() {
+    for (let i = 1; i <= 6; i++) {
+        const rawTemp = parseInt(document.getElementById(`t${i}_1`).value);
+        const rawLoad = parseInt(document.getElementById(`l${i}_1`).value);
+        const rawAngle = parseInt(document.getElementById(`m${i}_1`).value);
 
+        document.getElementById(`t${i}_1_converted`).innerText = isNaN(rawTemp) ? "" : `${convertTemperature(rawTemp).toFixed(1)} °C`;
+        document.getElementById(`l${i}_1_converted`).innerText = isNaN(rawLoad) ? "" : `${convertLoad(rawLoad).toFixed(2)} Н·м`;
+        document.getElementById(`m${i}_1_converted`).innerText = isNaN(rawAngle) ? "" : `${convertAngle(rawAngle).toFixed(1)}°`;
+    }
+}
 
+function connection() {
+    if (document.getElementById("robot_gripper_connect").checked) {
+        connect_robot_1();
+    }
+    if (document.getElementById("robot_vacuum_connect").checked) {
+        connect_robot_2();
+    }
+    if (document.getElementById("remote_terminal_connect").checked) {
+        connect_remote_terminal();
+    }
+    if (document.getElementById("traffic_lights_connect").checked) {
+        connect_traffic_lights();
+    }
+    if (document.getElementById("smart_camera_connect").checked) {
+        connect_smart_camera();
+    }
+}
 
 function connect_smart_camera() {
     $.ajax({
@@ -111,7 +119,8 @@ function connect_smart_camera() {
             'code': document.getElementById("code").value,
         },
 
-        success: function (response) {    }});
+        success: function (response) { }
+    });
 }
 
 
@@ -124,31 +133,31 @@ function connect_traffic_lights() {
         data: {},
 
         success: function (response) {
-            if (response['L1'] == 1){
+            if (response['L1'] == 1) {
                 document.getElementById("traffic_blue").style.backgroundColor = 'blue'
             }
-            else{
+            else {
                 document.getElementById("traffic_blue").style.backgroundColor = 'black'
             }
-            if (response['L2'] == 1){
+            if (response['L2'] == 1) {
                 document.getElementById("traffic_red").style.backgroundColor = 'red'
             }
-            else{
+            else {
                 document.getElementById("traffic_red").style.backgroundColor = 'black'
             }
-            if (response['L3'] == 1){
+            if (response['L3'] == 1) {
                 document.getElementById("traffic_yellow").style.backgroundColor = 'yellow'
             }
-            else{
+            else {
                 document.getElementById("traffic_yellow").style.backgroundColor = 'black'
             }
-            if (response['L4'] == 1){
+            if (response['L4'] == 1) {
                 document.getElementById("traffic_green").style.backgroundColor = 'green'
             }
-            else{
+            else {
                 document.getElementById("traffic_greengreen").style.backgroundColor = 'black'
             }
-            }
+        }
     });
 }
 
@@ -167,32 +176,32 @@ function connect_remote_terminal() {
         },
 
         success: function (response) {
-            if (response['L1'] == 1){
+            if (response['L1'] == 1) {
                 document.getElementById("remote_blue").style.backgroundColor = 'blue'
             }
-            else{
+            else {
                 document.getElementById("remote_blue").style.backgroundColor = 'black'
             }
-            if (response['L2'] == 1){
+            if (response['L2'] == 1) {
                 document.getElementById("remote_red").style.backgroundColor = 'red'
             }
-            else{
+            else {
                 document.getElementById("remote_red").style.backgroundColor = 'black'
             }
-            if (response['L3'] == 1){
+            if (response['L3'] == 1) {
                 document.getElementById("remote_yellow").style.backgroundColor = 'yellow'
             }
-            else{
+            else {
                 document.getElementById("remote_yellow").style.backgroundColor = 'black'
             }
-            if (response['L4'] == 1){
+            if (response['L4'] == 1) {
                 document.getElementById("remote_green").style.backgroundColor = 'green'
             }
-            else{
+            else {
                 document.getElementById("remote_green").style.backgroundColor = 'black'
             }
             console.log(response['L4'])
-            }
+        }
     });
 }
 
@@ -234,7 +243,9 @@ function connect_robot_1() {
             document.getElementById("Y_1").value = response["Y"]
             document.getElementById("T_1").value = response["T"]
             document.getElementById("G_1").value = response["G"]
-            }
+
+            showConvertedData();
+        }
     });
 }
 
@@ -268,13 +279,13 @@ function connect_robot_2() {
             'c': document.getElementById("c_2").value,
             'n': document.getElementById("n_2").value,
         },
-        
+
         success: function (response) {
             console.log(response)
             document.getElementById("N_control_2").value = response["N"]
             document.getElementById("X_2").value = response["X"]
             document.getElementById("Y_2").value = response["Y"]
             document.getElementById("V_2").value = response["V"]
-            }
+        }
     });
 }
