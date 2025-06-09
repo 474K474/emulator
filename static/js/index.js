@@ -175,10 +175,6 @@ function POI_2(){
 
 
 function set_robot_gripper_data(){
-    if (!document.getElementById("save_data").checked) {
-        return; // не отправляем, если чекбокс выключен
-    }
-
     $.ajax({
         type: 'GET',
         url: '/set_robot_gripper_data',
@@ -190,12 +186,13 @@ function set_robot_gripper_data(){
             'Y': document.getElementById("Y_1").value,
             'T': document.getElementById("T_1").value,
             'G': document.getElementById("G_1").value,
-            'save_data': true // передаём флаг на сервер
+            save_data: document.getElementById('save_data').checked
         },
-        success: function (response) {}
+        success: function (response) {
+
+        }
     });
 }
-
 
 
 function set_remote_terminal_data() {

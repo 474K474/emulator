@@ -12,8 +12,8 @@ def get_db():
     if 'db' not in g:
         g.db = DatabaseManager()
         g.db.connect()
-        g.db.create_tables() # Ensure tables are created on first connection
     return g.db
+
 
 @app.teardown_appcontext
 def close_db(e=None):
@@ -241,6 +241,10 @@ def get_all_critical_events_route():
 
 if __name__ == '__main__':
     try:
-        app.run(debug=True) # debug=True will also provide more detailed error messages
+        db = DatabaseManager()
+        db.connect()
+        db.create_tables()
+        db.disconnect()
+        app.run(debug=True)
     except Exception as e:
         print(f"Ошибка при запуске приложения: {e}")

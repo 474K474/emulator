@@ -122,3 +122,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Attach event listener to the apply button
     document.querySelector('.date-range-selector button').addEventListener('click', updateChartsAndTable);
 }); 
+
+window.updateChartsAndTable = updateChartsAndTable;
