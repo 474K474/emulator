@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Emulator</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="../static/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.min.js"></script>
+    <script src="../static/js/engineer_charts.js"></script>
+</head>
+<body>
+    <div id="main">
+        <div class="panel">
+            <hr>
+            <label>Получать данные с оборудования</label>
+            <label class="switch">
+                <input type="checkbox" id="connect">
+                <span class="slider round"></span>
+            </label>
+            <hr>
+            <label>Сохранять данные</label>
+            <label class="switch">
+                <input type="checkbox" id="save_data">
+                <span class="slider round"></span>
+            </label>
+            <hr>
+            <div class="input-box-period">
+                <label>Частота обновления</label>
+                <input type="text" id="update_period" placeholder="n">
+            </div>
+            <button onclick="update_period">Установить</button>
+
+            <hr>
+
+            <label>Допустимые значения</label>
+            <div class="limits">
+                <div class="limit_column">
+                    <div class="input-box">
+                        <label>t</label>
+                        <input type="text" id="limit_left_t" placeholder="limit_left_t">
+                    </div>
+                    <div class="input-box">
+                        <label>m</label>
+                        <input type="text" id="limit_left_m" placeholder="limit_left_m">
+                    </div>
+                    <div class="input-box">
+                        <label>l</label>
+                        <input type="text" id="limit_left_l" placeholder="limit_left_l">
+                    </div>
+                </div>
+                <div class="limit_column">
+                    <div class="input-box">
+                        <label>t</label>
+                        <input type="text" id="limit_right_t" placeholder="limit_right_t">
+                    </div>
+                    <div class="input-box">
+                        <label>m</label>
+                        <input type="text" id="limit_right_m" placeholder="limit_right_m">
+                    </div>
+                    <div class="input-box">
+                        <label>l</label>
+                        <input type="text" id="limit_right_l" placeholder="limit_right_l">
+                    </div>
+                </div>
+                </div>
+            <hr>
+            <label>Критические значения</label>
+            <div class="limits">
+                <div class="limit_column">
+                    <div class="input-box">
+                        <label>t</label>
+                        <input type="text" id="critical_left_t" placeholder="limit_left_t">
+                    </div>
+                    <div class="input-box">
+                        <label>m</label>
+                        <input type="text" id="critical_left_m" placeholder="limit_left_m">
+                    </div>
+                    <div class="input-box">
+                        <label>l</label>
+                        <input type="text" id="critical_left_l" placeholder="limit_left_l">
+                    </div>
+                </div>
+                <div class="limit_column">
+                    <div class="input-box">
+                        <label>t</label>
+                        <input type="text" id="critical_right_t" placeholder="limit_right_t">
+                    </div>
+                    <div class="input-box">
+                        <label>m</label>
+                        <input type="text" id="critical_right_m" placeholder="limit_right_m">
+                    </div>
+                    <div class="input-box">
+                        <label>l</label>
+                        <input type="text" id="critical_right_l" placeholder="limit_right_l">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <label id="limit_signal" style="display: none">Внимание! Выход за допустимые значения</label>
+            <hr>
+            <label id="critical_signal" style="display: none">Внимание! Выход за критические значения</label>
+
+            <hr>
+            <button onclick="POI_1()">1</button>
+        </div>
+        <div class="interface">
+
+            <div class="thing" id = robot_left>
+                <div class="sensors">
+                    <div class="sensor" id="temp">
+                        <div class="input-box">
+                            <label>t1</label>
+                            <input type="text" id="t1_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>t2</label>
+                            <input type="text" id="t2_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>t3</label>
+                            <input type="text" id="t3_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>t4, С</label>
+                            <input type="text" id="t4_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>t5</label>
+                            <input type="text" id="t5_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>t6</label>
+                            <input type="text" id="t6_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>n</label>
+                            <input type="text" id="n_1" placeholder="n" disabled="disabled" >
+                        </div>
+                    </div>
+                    <div class="sensor" id="load">
+                        <div class="input-box">
+                            <label>l1</label>
+                            <input type="text" id="l1_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>l2</label>
+                            <input type="text" id="l2_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>l3</label>
+                            <input type="text" id="l3_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>l4</label>
+                            <input type="text" id="l4_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>l5</label>
+                            <input type="text" id="l5_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>l6</label>
+                            <input type="text" id="l6_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>s</label>
+                            <input type="text" id="s_1" placeholder="s" disabled="disabled" >
+                        </div>
+                    </div>
+                    <div class="sensor" id="motor">
+                        <div class="input-box">
+                            <label>m1</label>
+                            <input type="text" id="m1_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>m2</label>
+                            <input type="text" id="m2_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>m3</label>
+                            <input type="text" id="m3_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>m4</label>
+                            <input type="text" id="m4_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>m5</label>
+                            <input type="text" id="m5_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>m6</label>
+                            <input type="text" id="m6_1" placeholder="C" disabled="disabled" >
+                        </div>
+                        <div class="input-box">
+                            <label>c</label>
+                            <input type="text" id="c_1" placeholder="c" disabled="disabled" >
+                        </div>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="input-box">
+                        <label>N</label>
+                        <input type="text" id="N_control_1" placeholder="c">
+                    </div>
+                    <div class="input-box">
+                        <label>X</label>
+                        <input type="text" id="X_1" placeholder="X">
+                    </div>
+                    <div class="input-box">
+                        <label>Y</label>
+                        <input type="text" id="Y_1" placeholder="Y">
+                    </div>
+                    <div class="input-box">
+                        <label>T</label>
+                        <input type="text" id="T_1" placeholder="T">
+                    </div>
+                    <div class="input-box">
+                        <label>G</label>
+                        <input type="text" id="G_1" placeholder="G">
+                    </div>
+                    <button onclick="set_robot_gripper_data()">Старт</button>
+                </div>
+                <hr>
+                <div class="thing" id = "remote_terminal">
+
+                    <div class="colors">
+                        <label class="switch">
+                          <input type="checkbox" id="remote_terminal_blue">
+                          <span class="slider round"></span>
+                        </label>
+
+                        <label class="switch">
+                          <input type="checkbox" id="remote_terminal_red">
+                          <span class="slider round"></span>
+                        </label>
+
+                        <label class="switch">
+                              <input type="checkbox" id="remote_terminal_yellow">
+                          <span class="slider round"></span>
+                        </label>
+
+                        <label class="switch">
+                          <input type="checkbox" id="remote_terminal_green">
+                          <span class="slider round"></span>
+                        </label>
+
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="thing" id="traffic_lights_control">
+                <h3>Управление светофорами</h3>
+                <div class="colors">
+                    <label class="switch">
+                        <input type="checkbox" id="traffic_lights_L1" onchange="setTrafficLightStatus('L1')">
+                        <span class="slider round"></span> L1
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="traffic_lights_L2" onchange="setTrafficLightStatus('L2')">
+                        <span class="slider round"></span> L2
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="traffic_lights_L3" onchange="setTrafficLightStatus('L3')">
+                        <span class="slider round"></span> L3
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="traffic_lights_L4" onchange="setTrafficLightStatus('L4')">
+                        <span class="slider round"></span> L4
+                    </label>
+                </div>
+            </div>
+
+            <div class="thing" id="poi_control">
+                <h3>Управление POI</h3>
+                <div class="input-box">
+                    <label>Название POI</label>
+                    <input type="text" id="poi_name" placeholder="Название позиции">
+                </div>
+                <button onclick="savePOI()">Сохранить POI</button>
+                <button onclick="loadPOI()">Загрузить POI</button>
+                <select id="poi_list"></select>
+            </div>
+            <hr>
+            <div class="thing" id="command_queue_control">
+                <h3>Очередь команд</h3>
+                <ul id="command_queue_list"></ul>
+                <button onclick="addCurrentPOIToQueue()">Добавить текущую POI в очередь</button>
+                <button onclick="executeNextCommandInQueue()">Выполнить следующую команду</button>
+                <button onclick="clearCommandQueue()">Очистить очередь команд</button>
+            </div>
+
+            <div class="chart-container">
+                <h3>График температуры</h3>
+                <canvas id="temperatureChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>График нагрузки</h3>
+                <canvas id="loadChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>График моторов</h3>
+                <canvas id="motorChart"></canvas>
+            </div>
+
+            <div class="history-table">
+                <h3>История данных</h3>
+                <div class="date-range-selector">
+                    <label for="startDate">Начальная дата:</label>
+                    <input type="datetime-local" id="startDate">
+                    <label for="endDate">Конечная дата:</label>
+                    <input type="datetime-local" id="endDate">
+                    <button onclick="updateChartsAndTable()">Применить</button>
+                </div>
+                <table id="dataHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>Время</th>
+                            <th>Устройство</th>
+                            <th>T1</th>
+                            <th>T2</th>
+                            <th>T3</th>
+                            <th>T4</th>
+                            <th>T5</th>
+                            <th>T6</th>
+                            <th>L1</th>
+                            <th>L2</th>
+                            <th>L3</th>
+                            <th>L4</th>
+                            <th>L5</th>
+                            <th>L6</th>
+                            <th>M1</th>
+                            <th>M2</th>
+                            <th>M3</th>
+                            <th>M4</th>
+                            <th>M5</th>
+                            <th>M6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script src="../static/js/engineer_charts.js"></script>
+</body>
+</html>
